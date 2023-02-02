@@ -8,28 +8,92 @@ This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute
 Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Cmd+Shift+Enter*. 
 
 ```{r}
-Mydata=read.csv("deliverable1.csv")
+CCdata2020=read.csv("2020CovidData.csv")
+CCdata2021=read.csv("2021CovidData.csv")
+CCdata2022=read.csv("2022CovidData.csv")
+CCdata2023=read.csv("2023CovidData.csv")
 ```
 
 
 ```{r}
-names(Mydata)
+names(CCdata2020)
+names(CCdata2021)
+names(CCdata2022)
+names(CCdata2023)
 ```
 
 
 ```{r}
-str(Mydata, width = 70, strict.width='cut')
+str(CCdata2020, width = 70, strict.width='cut')
+str(CCdata2021, width = 70, strict.width='cut')
+str(CCdata2022, width = 70, strict.width='cut')
+str(CCdata2023, width = 70, strict.width='cut')
 ```
 
 
 ```{r}
-COVIDDF=as.data.frame(table(Mydata$cases))
-names(COVIDDF)=c("Covid_Cases","Count")
+CCdata2021=as.data.frame(table(CCdata2020$cases))
+names(CCdata2020)=c("cases","state")
 
 library(ggplot2)
-base1=ggplot(data=COVIDDF, aes(x=Covid_Cases,Count))
+base1=ggplot(data=CCdata2020, aes(x=state,cases))
 bar1=base1+geom_bar(stat = "identity")
 bar1
+```
+
+
+```{r}
+CCdata2021=as.data.frame(table(CCdata2021$cases))
+names(CCdata2021)=c("state","cases")
+
+library(ggplot2)
+base2=ggplot(data=CCdata2021, aes(x=state,cases))
+bar2=base2+geom_bar(stat = "identity")
+bar2
+```
+
+
+```{r}
+CCdata2022=as.data.frame(table(CCdata2022$cases))
+names(CCdata2022)=c("state","cases")
+
+library(ggplot2)
+base3=ggplot(data=CCdata2022, aes(x=state,cases))
+bar3=base3+geom_bar(stat = "identity")
+bar3
+```
+
+
+```{r}
+CCdata2023=as.data.frame(table(CCdata2023$cases))
+names(CCdata2023)=c("state","cases")
+
+library(ggplot2)
+base4=ggplot(data=CCdata2023, aes(x=state,cases))
+bar4=base4+geom_bar(stat = "identity")
+bar4
+```
+
+
+```{r}
+summary(CCdata2020$cases)
+```
+
+
+```{r}
+(statVals=summary(CCdata2020$cases,digits = 6)[1:6])
+```
+
+
+```{r}
+library(magrittr)
+statVals=statVals%>%as.vector()
+
+base= ggplot(CCdata2020,aes(y = cases))  
+b1= base + geom_boxplot() 
+b1=b1 +coord_flip()
+b1=b1+ scale_y_continuous(breaks = statVals)
+b1
 ```
 
 

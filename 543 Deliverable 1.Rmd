@@ -16,9 +16,21 @@ Try executing this chunk by clicking the *Run* button within the chunk or by pla
 
 
 ```{r}
-location='https://github.com/543-Van-Deliverables/Deliverable-1/raw/main/'
-file='2020CovidData.csv'
-link=paste0(location,file)
+Glink="https://github.com/543-Van-Deliverables/Deliverable-1/raw/main/"
+Flink="CovidData2020.csv"
+CovidData2020=read.csv(paste0(Glink,Flink))
+
+Glink="https://github.com/543-Van-Deliverables/Deliverable-1/raw/main/"
+Flink="CovidData2021.csv"
+CovidData2021=read.csv(paste0(Glink,Flink))
+
+Glink="https://github.com/543-Van-Deliverables/Deliverable-1/raw/main/"
+Flink="CovidData2022.csv"
+CovidData2022=read.csv(paste0(Glink,Flink))
+
+Glink="https://github.com/543-Van-Deliverables/Deliverable-1/raw/main/"
+Flink="CovidData2023.csv"
+CovidData2023=read.csv(paste0(Glink,Flink))
 ```
 
 
@@ -27,56 +39,64 @@ link=paste0(location,file)
 #names(CCdata2021)
 #names(CCdata2022)
 #names(CCdata2023)
+names(CovidData2020)
+names(CovidData2021)
+names(CovidData2022)
+names(CovidData2023)
 ```
 
 
 ```{r}
-str(CCdata2020, width = 70, strict.width='cut')
-#str(CCdata2021, width = 70, strict.width='cut')
-#str(CCdata2022, width = 70, strict.width='cut')
-#str(CCdata2023, width = 70, strict.width='cut')
+str(CovidData2020, width = 70, strict.width='cut')
+str(CovidData2021, width = 70, strict.width='cut')
+str(CovidData2022, width = 70, strict.width='cut')
+str(CovidData2023, width = 70, strict.width='cut')
 ```
 
 
 ```{r}
-head(CCdata2020$state,20)
+head(CovidData2020$state,20)
+head(CovidData2021$state,20)
+head(CovidData2022$state,20)
+head(CovidData2023$state,20)
 ```
 
 
 ```{r}
-#this isn't useful since its showing how many times each state was mentioned, but it doesn't tell how many cases per time each state was mentioned
-absoluteT=table(CCdata2020$state)
+#Just 2020 since this isn't useful since its showing how many times each state was mentioned, but it doesn't tell how many cases per time each state was mentioned
+absoluteT=table(CovidData2020$state)
 absoluteT
 ```
 
 
 ```{r}
+#Not useful
 #absoluteT=table(CCdata2020$cases)
 #absoluteT
 ```
 
 
 ```{r}
-#not really helpful in this case
+#Just 2020-not really helpful in this case
 prop.table(absoluteT)
 ```
 
 
 ```{r}
-#not useful
+#Just 2020-not useful
 propT=prop.table(absoluteT)*100
 propT
 ```
 
 
 ```{r}
-#Not useful here
+#Just 2020-ot useful here
 (tableFreq=as.data.frame(absoluteT))
 ```
 
 
 ```{r}
-#still not useful
+#Just 2020-still not useful
 names(tableFreq)=c("State","Cases")
 tableFreq$Percent=as.vector(propT)
 tableFreq
@@ -88,7 +108,7 @@ tableFreq
 #names(CCdata2020)=c("cases","state")
 
 library(ggplot2)
-base1=ggplot(data=CCdata2020, aes(x=state,cases))
+base1=ggplot(data=CovidData2020, aes(x=state,cases))
 bar1=base1+geom_bar(stat = "identity")
 bar1
 ```
@@ -107,18 +127,11 @@ bar1+coord_flip()
 
 
 ```{r}
-location='https://github.com/543-Van-Deliverables/Deliverable-1/raw/main/'
-file='2021CovidData.csv'
-link=paste0(location,file)
-```
-
-
-```{r}
 #CCdata2021=as.data.frame(table(CCdata2021$cases))
 #names(CCdata2021)=c("state","cases")
 
 library(ggplot2)
-base2=ggplot(data=CCdata2021, aes(x=state,cases))
+base2=ggplot(data=CovidData2021, aes(x=state,cases))
 bar2=base2+geom_bar(stat = "identity")
 bar2
 ```
@@ -131,18 +144,11 @@ bar2+coord_flip()
 
 
 ```{r}
-location='https://github.com/543-Van-Deliverables/Deliverable-1/raw/main/'
-file='2022CovidData.csv'
-link=paste0(location,file)
-```
-
-
-```{r}
 #CCdata2022=as.data.frame(table(CCdata2022$cases))
 #names(CCdata2022)=c("state","cases")
 
 library(ggplot2)
-base3=ggplot(data=CCdata2022, aes(x=state,cases))
+base3=ggplot(data=CovidData2022, aes(x=state,cases))
 bar3=base3+geom_bar(stat = "identity")
 bar3
 ```
@@ -154,20 +160,12 @@ bar3
 bar3+coord_flip()
 ```
 
-
-```{r}
-location='https://github.com/543-Van-Deliverables/Deliverable-1/raw/main/'
-file='2023CovidData.csv'
-link=paste0(location,file)
-```
-
-
 ```{r}
 #CCdata2023=as.data.frame(table(CCdata2023$cases))
 #names(CCdata2023)=c("state","cases")
 
 library(ggplot2)
-base4=ggplot(data=CCdata2023, aes(x=state,cases))
+base4=ggplot(data=CovidData2023, aes(x=state,cases))
 bar4=base4+geom_bar(stat = "identity")
 bar4
 ```
@@ -181,12 +179,13 @@ bar4+coord_flip()
 
 
 ```{r}
-summary(CCdata2020$cases)
+#Just 2020
+summary(CovidData2020$cases)
 ```
 
 
 ```{r}
-(statVals=summary(CCdata2020$cases,digits = 6)[1:6])
+(statVals=summary(CovidData2020$cases,digits = 6)[1:6])
 ```
 
 
@@ -195,7 +194,7 @@ summary(CCdata2020$cases)
 library(magrittr)
 statVals=statVals%>%as.vector()
 
-base= ggplot(CCdata2020,aes(y = cases))  
+base= ggplot(CovidData2020,aes(y = cases))  
 b1= base + geom_boxplot() 
 b1=b1 +coord_flip()
 b1=b1+ scale_y_continuous(breaks = statVals)
@@ -204,11 +203,59 @@ b1
 
 
 ```{r}
-
+#Just 2021
+summary(CovidData2021$cases)
+(statVals=summary(CovidData2021$cases,digits = 6)[1:6])
 ```
 
 
 ```{r}
+library(magrittr)
+statVals=statVals%>%as.vector()
+
+base= ggplot(CovidData2021,aes(y = cases))  
+b2= base + geom_boxplot() 
+b2=b2 +coord_flip()
+b2=b2+ scale_y_continuous(breaks = statVals)
+b2
+```
+
+
+```{r}
+#Just 2022
+summary(CovidData2022$cases)
+(statVals=summary(CovidData2022$cases,digits = 6)[1:6])
+```
+
+
+```{r}
+library(magrittr)
+statVals=statVals%>%as.vector()
+
+base= ggplot(CovidData2022,aes(y = cases))  
+b3= base + geom_boxplot() 
+b3=b3 +coord_flip()
+b3=b3+ scale_y_continuous(breaks = statVals)
+b3
+```
+
+
+```{r}
+#Just 2023
+summary(CovidData2023$cases)
+(statVals=summary(CovidData2023$cases,digits = 6)[1:6])
+```
+
+
+```{r}
+library(magrittr)
+statVals=statVals%>%as.vector()
+
+base= ggplot(CovidData2023,aes(y = cases))  
+b4= base + geom_boxplot() 
+b4=b4 +coord_flip()
+b4=b4+ scale_y_continuous(breaks = statVals)
+b4
 ```
 
 

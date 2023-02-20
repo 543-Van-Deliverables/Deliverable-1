@@ -1,0 +1,271 @@
+---
+title: "R Notebook"
+output: html_document
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Cmd+Shift+Enter*. 
+
+```{r}
+#CCdata2020=read.csv("2020CovidData.csv")
+#CCdata2021=read.csv("2021CovidData.csv")
+#CCdata2022=read.csv("2022CovidData.csv")
+#CCdata2023=read.csv("2023CovidData.csv")
+```
+
+
+```{r}
+Glink="https://github.com/543-Van-Deliverables/Deliverable-1/raw/main/"
+Flink="CovidData2020.csv"
+CovidData2020=read.csv(paste0(Glink,Flink))
+
+Glink="https://github.com/543-Van-Deliverables/Deliverable-1/raw/main/"
+Flink="CovidData2021.csv"
+CovidData2021=read.csv(paste0(Glink,Flink))
+
+Glink="https://github.com/543-Van-Deliverables/Deliverable-1/raw/main/"
+Flink="CovidData2022.csv"
+CovidData2022=read.csv(paste0(Glink,Flink))
+
+Glink="https://github.com/543-Van-Deliverables/Deliverable-1/raw/main/"
+Flink="CovidData2023.csv"
+CovidData2023=read.csv(paste0(Glink,Flink))
+```
+
+
+```{r}
+#names(CCdata2020)
+#names(CCdata2021)
+#names(CCdata2022)
+#names(CCdata2023)
+names(CovidData2020)
+names(CovidData2021)
+names(CovidData2022)
+names(CovidData2023)
+```
+
+
+```{r}
+str(CovidData2020, width = 70, strict.width='cut')
+str(CovidData2021, width = 70, strict.width='cut')
+str(CovidData2022, width = 70, strict.width='cut')
+str(CovidData2023, width = 70, strict.width='cut')
+```
+
+
+```{r}
+head(CovidData2020$state,20)
+head(CovidData2021$state,20)
+head(CovidData2022$state,20)
+head(CovidData2023$state,20)
+```
+
+
+```{r}
+#Just 2020 since this isn't useful since its showing how many times each state was mentioned, but it doesn't tell how many cases per time each state was mentioned
+absoluteT=table(CovidData2020$state)
+absoluteT
+```
+
+
+```{r}
+#Not useful
+#absoluteT=table(CCdata2020$cases)
+#absoluteT
+```
+
+
+```{r}
+#Just 2020-not really helpful in this case
+prop.table(absoluteT)
+```
+
+
+```{r}
+#Just 2020-not useful
+propT=prop.table(absoluteT)*100
+propT
+```
+
+
+```{r}
+#Just 2020-ot useful here
+(tableFreq=as.data.frame(absoluteT))
+```
+
+
+```{r}
+#Just 2020-still not useful
+names(tableFreq)=c("State","Cases")
+tableFreq$Percent=as.vector(propT)
+tableFreq
+```
+
+
+```{r}
+#CCdata2020=as.data.frame(table(CCdata2020$cases))
+#names(CCdata2020)=c("cases","state")
+
+library(ggplot2)
+base1=ggplot(data=CovidData2020, aes(x=state,cases))
+bar1=base1+geom_bar(stat = "identity")
+bar1
+```
+
+
+```{r}
+#2020 Data Only
+#ideally, the final would look something like this but I would also like a line graph with deaths per state in the same plot
+bar1+coord_flip()
+```
+
+
+```{r}
+
+```
+
+
+```{r}
+#CCdata2021=as.data.frame(table(CCdata2021$cases))
+#names(CCdata2021)=c("state","cases")
+
+library(ggplot2)
+base2=ggplot(data=CovidData2021, aes(x=state,cases))
+bar2=base2+geom_bar(stat = "identity")
+bar2
+```
+
+```{r}
+#2021 Data Only
+#ideally, the final would look something like this but I would also like a line graph with deaths per state in the same plot
+bar2+coord_flip()
+```
+
+
+```{r}
+#CCdata2022=as.data.frame(table(CCdata2022$cases))
+#names(CCdata2022)=c("state","cases")
+
+library(ggplot2)
+base3=ggplot(data=CovidData2022, aes(x=state,cases))
+bar3=base3+geom_bar(stat = "identity")
+bar3
+```
+
+
+```{r}
+#2022 Data Only
+#ideally, the final would look something like this but I would also like a line graph with deaths per state in the same plot
+bar3+coord_flip()
+```
+
+```{r}
+#CCdata2023=as.data.frame(table(CCdata2023$cases))
+#names(CCdata2023)=c("state","cases")
+
+library(ggplot2)
+base4=ggplot(data=CovidData2023, aes(x=state,cases))
+bar4=base4+geom_bar(stat = "identity")
+bar4
+```
+
+
+```{r}
+#2023 Data Only
+#ideally, the final would look something like this but I would also like a line graph with deaths per state in the same plot
+bar4+coord_flip()
+```
+
+
+```{r}
+#Just 2020
+summary(CovidData2020$cases)
+```
+
+
+```{r}
+(statVals=summary(CovidData2020$cases,digits = 6)[1:6])
+```
+
+
+```{r}
+#How could you see cases per state? So there would be 55 different boxplots with their own min, 1st qu, median, mean, 3rd qu., and max.
+library(magrittr)
+statVals=statVals%>%as.vector()
+
+base= ggplot(CovidData2020,aes(y = cases))  
+b1= base + geom_boxplot() 
+b1=b1 +coord_flip()
+b1=b1+ scale_y_continuous(breaks = statVals)
+b1
+```
+
+
+```{r}
+#Just 2021
+summary(CovidData2021$cases)
+(statVals=summary(CovidData2021$cases,digits = 6)[1:6])
+```
+
+
+```{r}
+library(magrittr)
+statVals=statVals%>%as.vector()
+
+base= ggplot(CovidData2021,aes(y = cases))  
+b2= base + geom_boxplot() 
+b2=b2 +coord_flip()
+b2=b2+ scale_y_continuous(breaks = statVals)
+b2
+```
+
+
+```{r}
+#Just 2022
+summary(CovidData2022$cases)
+(statVals=summary(CovidData2022$cases,digits = 6)[1:6])
+```
+
+
+```{r}
+library(magrittr)
+statVals=statVals%>%as.vector()
+
+base= ggplot(CovidData2022,aes(y = cases))  
+b3= base + geom_boxplot() 
+b3=b3 +coord_flip()
+b3=b3+ scale_y_continuous(breaks = statVals)
+b3
+```
+
+
+```{r}
+#Just 2023
+summary(CovidData2023$cases)
+(statVals=summary(CovidData2023$cases,digits = 6)[1:6])
+```
+
+
+```{r}
+library(magrittr)
+statVals=statVals%>%as.vector()
+
+base= ggplot(CovidData2023,aes(y = cases))  
+b4= base + geom_boxplot() 
+b4=b4 +coord_flip()
+b4=b4+ scale_y_continuous(breaks = statVals)
+b4
+```
+
+
+```{r}
+
+```
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Cmd+Option+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Cmd+Shift+K* to preview the HTML file). 
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
+

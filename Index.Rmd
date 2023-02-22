@@ -46,7 +46,6 @@ b1
 (numOutliers=sum(CRF$LifeExpectancy<lowerT,na.rm=T))
 ```
 ```{r}
-#How do I just get the threshold number to show as 56?
 txtUpper=paste0('Threshold:',lowerT)
 txtOut=paste0('Outlying Ages:',numOutliers)
 b1_line = b1 + geom_hline(yintercept = lowerT,color='green',linetype="dotted",size=2) 
@@ -68,9 +67,7 @@ b1_upper_line_out_noX + theme(axis.text.x = element_text(angle = 90,size = 8,vju
 WIDTH=10
 library(ggplot2)
 base= ggplot(CRF)  
-h1= base + geom_histogram(aes(x = LifeExpectancy),
-                          binwidth = WIDTH,
-                          fill='darkgreen') 
+h1= base + geom_histogram(aes(x = LifeExpectancy),binwidth = WIDTH,fill='darkgreen') 
 h1=h1 + labs(y="count")
 h1
 ```
@@ -105,7 +102,7 @@ sk=Skew(CRF$LifeExpectancy,na.rm = T)
 annMean=paste0('Mean:',round(mn))
 annSk=paste0('Skewness:',round(sk,2))
 
-h1+ geom_vline(xintercept = mn,color='green') +annotate(geom = 'text',color='green',label=annMean,y = 75,x=mn+5,angle=90) + annotate(geom = 'text', color='darkblue',label=annSk,y = 05,x=lowerT+35,angle=0)
+h1+ geom_vline(xintercept = mn,color='green') +annotate(geom = 'text',color='green',label=annMean,y = 50,x=mn-1,angle=90) + annotate(geom = 'text', color='darkblue',label=annSk,y = 05,x=lowerT+35,angle=0) +ggtitle("World Life Expectancy")+labs(x="Life Expectancy",y="Number of Countries")
 ```
 
 ```

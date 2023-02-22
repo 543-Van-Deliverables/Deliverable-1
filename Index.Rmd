@@ -1,6 +1,8 @@
 ---
 title: "R Notebook"
-output: html_notebook
+output:
+  html_document:
+    df_print: paged
 ---
 
 This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
@@ -30,6 +32,8 @@ summary(CRF$LifeExpectancy)
 library(magrittr)
 statVals=statVals%>%as.vector()
 
+install.packages("ggplot2")
+library(ggplot2)
 base=ggplot(CRF,aes(y=LifeExpectancy))
 b1=base+geom_boxplot()
 b1=b1+coord_flip()
@@ -49,9 +53,9 @@ b1
 txtUpper=paste0('Threshold:',lowerT)
 txtOut=paste0('Outlying Ages:',numOutliers)
 b1_line = b1 + geom_hline(yintercept = lowerT,color='green',linetype="dotted",size=2) 
-b1_upper_line=b1_line + annotate(geom = 'text',label=txtUpper,y = lowerT+5,x=0.2,angle=90)
+b1_upper_line=b1_line + annotate(geom = 'text',label=txtUpper,y = lowerT-1,x=0.2,angle=90)
 
-b1_upper_line_out=b1_upper_line + annotate(geom = 'text',label=txtOut,y = lowerT+60,x=0.1,angle=0)
+b1_upper_line_out=b1_upper_line + annotate(geom = 'text',label=txtOut,y = lowerT-1,x=-0.05,angle=0)
 b1_upper_line_out
 ```
 ```{r}
